@@ -14,3 +14,10 @@
 !/tmp/.keep
 
 .byebug_history
+
+# VIM temp files
+*.swp
+*.swo
+
+# Environmental variables and secrets
+.env
