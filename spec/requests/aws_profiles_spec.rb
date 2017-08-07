@@ -84,9 +84,27 @@ RSpec.describe 'AwsProfiles API', type: :request do
 
   # Test suit for PUT /profiles/:id
   describe 'PUT /aws_profiles/:id' do
+    let(:valid_attributes) { { name: 'lopeze' } }
+
+    context 'When the profile exists' do
+      before { put "/aws_profiles/#{aws_profile_id}", params: valid_attributes }
+
+      it 'updates the profile' do
+        expect(response.body).to be_empty
+      end
+
+      it 'returns status code 204' do
+        expect(response).to have_http_status(204)
+      end
+    end
   end
 
   # Test suit for DELETE /profiles/:id
   describe 'DELETE /aws_profiles/:id' do
+    before { delete "/aws_profiles/#{aws_profile_id}" }
+
+    it 'returns status code 204' do
+      expect(response).to have_http_status(204)
+    end
   end
 end

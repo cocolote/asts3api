@@ -15,6 +15,16 @@ class AwsProfilesController < ApplicationController
     json_response(@aws_profile)
   end
 
+  def update
+    @aws_profile.update(aws_profile_params)
+    head :no_content
+  end
+
+  def destroy
+    @aws_profile.destroy
+    head :no_content
+  end
+
   private
 
   def aws_profile_params
