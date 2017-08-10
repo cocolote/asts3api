@@ -80,5 +80,7 @@ RSpec.configure do |config|
   end
 
   # Include custom RequestSpecHelper
-  config.include RequestSpecHelper, type: :request
+  config.include RequestSpecHelper
+  # Include custom ControllerHelper
+  config.include ControllerSpecHelper
 end
