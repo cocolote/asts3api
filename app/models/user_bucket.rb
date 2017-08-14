@@ -1,0 +1,2 @@
+class UserBucket < Bucket
+end

@@ -3,6 +3,10 @@ Rails.application.routes.draw do
   post 'auth/login', to: 'authentication#authenticate'
 
   resources :aws_profiles do
-    resources :buckets
+    resources :buckets, controller: "aws_profile_buckets"
+  end
+
+  resources :users do
+    resources :buckets, controller: "user_buckets"
   end
 end

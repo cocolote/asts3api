@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Buckets API', type: :request do
+RSpec.describe 'Aws Profile Buckets API', type: :request do
   # Initialize test data
   let(:admin) { create(:user, admin: true) }
   let(:aws_profile) { create(:aws_profile) }

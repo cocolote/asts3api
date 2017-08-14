@@ -1,4 +1,4 @@
-class BucketsController < ApplicationController
+class AwsProfileBucketsController < ApplicationController
   before_action :set_aws_profile
   before_action :set_bucket, only: [:show, :update, :destroy]
 

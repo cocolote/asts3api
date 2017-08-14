@@ -1,0 +1,2 @@
+class AwsProfileBucket < Bucket
+end
