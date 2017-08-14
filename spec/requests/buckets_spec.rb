@@ -17,10 +17,11 @@ RSpec.describe 'Buckets API', type: :request do
   let(:user_id) { admin.id }
   let(:aws_profile_id) { aws_profile.id }
   let(:id) { buckets.first.id }
+  let(:headers) { valid_headers }
 
   # Test suite for GET /aws_profiles/:aws_profile_id/buckets
   describe 'GET /aws_profiles/:aws_profile_id/buckets' do
-    before { get "/aws_profiles/#{aws_profile_id}/buckets" }
+    before { get "/aws_profiles/#{aws_profile_id}/buckets", headers: headers }
 
     context 'When aws_profile exists' do
       it 'returns all buckets' do
@@ -57,13 +58,14 @@ RSpec.describe 'Buckets API', type: :request do
         bkt_download: true,
         bkt_copy: true,
         bkt_delete: true,
-      }
+      }.to_json
     }
 
     context 'When request is valid' do
       before {
         post "/aws_profiles/#{aws_profile_id}/buckets",
-        params: valid_attributes
+        params: valid_attributes,
+        headers: headers
       }
 
       it 'creates a bucket' do
@@ -78,7 +80,8 @@ RSpec.describe 'Buckets API', type: :request do
     context 'When request is invalid' do
       before {
         post "/aws_profiles/#{aws_profile_id}/buckets",
-        params: {}
+        params: {}.to_json,
+        headers: headers
       }
 
       it 'returns status code 422' do
@@ -93,7 +96,7 @@ RSpec.describe 'Buckets API', type: :request do
 
   # Test suite for GET /aws_proflies/:aws_profile_id/buckets/:id
   describe 'GET /aws_profiles/:aws_profile_id/buckets/:id' do
-    before { get "/aws_profiles/#{aws_profile_id}/buckets/#{id}" }
+    before { get "/aws_profiles/#{aws_profile_id}/buckets/#{id}", headers: headers }
 
     context 'When aws_profile bucket exists' do
       it 'returns status code 200' do
@@ -120,10 +123,11 @@ RSpec.describe 'Buckets API', type: :request do
 
   # Test suite for PUT /aws_proflies/:aws_profile_id/buckets/:id
   describe 'PUT /aws_profiles/:aws_profile_id/buckets/:id' do
-    let(:valid_attributes) { { bucket_name: 'ast_bucket' } }
+    let(:valid_attributes) { { bucket_name: 'ast_bucket' }.to_json }
     before {
       put "/aws_profiles/#{aws_profile_id}/buckets/#{id}",
-      params: valid_attributes
+      params: valid_attributes,
+      headers: headers
     }
 
     context 'When the bucket exists' do
@@ -152,7 +156,7 @@ RSpec.describe 'Buckets API', type: :request do
 
   # Test suite for DELETE /aws_proflies/:aws_profile_id/buckets/:id
   describe 'DELETE /aws_profiles/:aws_profile_id/buckets/:id' do
-    before { delete "/aws_profiles/#{aws_profile_id}/buckets/#{id}" }
+    before { delete "/aws_profiles/#{aws_profile_id}/buckets/#{id}", headers: headers }
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)

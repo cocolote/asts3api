@@ -2,12 +2,14 @@ require 'rails_helper'
 
 RSpec.describe 'AwsProfiles API', type: :request do
   # Initialize test data
+  let(:admin) { create(:user, admin: true) }
   let!(:aws_profiles) { create_list(:aws_profile, 3) }
   let(:aws_profile_id) { aws_profiles.first.id }
+  let(:headers) { valid_headers }
 
   # Test suit for GET /profiles
   describe 'GET /aws_profiles' do
-    before { get '/aws_profiles' }
+    before { get '/aws_profiles', headers: headers }
 
     it 'returns aws_profiles' do
       expect(json).not_to be_empty
@@ -26,11 +28,11 @@ RSpec.describe 'AwsProfiles API', type: :request do
         name: 'ezelop',
         access_key: 'asdfqwerasdfqwerasdf',
         secret_access_key: 'asdfqwerasdfqwerasdfasdfqwerasdfqwerasdf'
-      }
+      }.to_json
     }
 
     context 'When the request is valid' do
-      before { post '/aws_profiles', params: valid_attributes }
+      before { post '/aws_profiles', params: valid_attributes, headers: headers }
 
       it 'creates an aws_profile' do
         expect(json['name']).to eq('ezelop')
@@ -42,7 +44,7 @@ RSpec.describe 'AwsProfiles API', type: :request do
     end
 
     context 'When the request is invalid' do
-      before { post '/aws_profiles', params: {} }
+      before { post '/aws_profiles', params: {}, headers: headers }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
@@ -56,7 +58,7 @@ RSpec.describe 'AwsProfiles API', type: :request do
 
   # Test suit for GET/profiles/:id
   describe 'GET /aws_profiles/:id' do
-    before { get "/aws_profiles/#{aws_profile_id}" }
+    before { get "/aws_profiles/#{aws_profile_id}", headers: headers }
 
     context 'When the profile exists' do
       it 'returns the profile' do
@@ -84,10 +86,10 @@ RSpec.describe 'AwsProfiles API', type: :request do
 
   # Test suit for PUT /profiles/:id
   describe 'PUT /aws_profiles/:id' do
-    let(:valid_attributes) { { name: 'lopeze' } }
+    let(:valid_attributes) { { name: 'lopeze' }.to_json }
 
     context 'When the profile exists' do
-      before { put "/aws_profiles/#{aws_profile_id}", params: valid_attributes }
+      before { put "/aws_profiles/#{aws_profile_id}", params: valid_attributes, headers: headers }
 
       it 'updates the profile' do
         expect(response.body).to be_empty
@@ -101,7 +103,7 @@ RSpec.describe 'AwsProfiles API', type: :request do
 
   # Test suit for DELETE /profiles/:id
   describe 'DELETE /aws_profiles/:id' do
-    before { delete "/aws_profiles/#{aws_profile_id}" }
+    before { delete "/aws_profiles/#{aws_profile_id}", headers: headers }
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)

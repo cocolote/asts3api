@@ -29,7 +29,7 @@ RSpec.describe 'Users API', type: :request do
       before { post '/signup', params: {}, headers: headers }
 
       it 'does not create a new user' do
-        expect(rsponse).to have_http_status(422)
+        expect(response).to have_http_status(422)
       end
 
       it 'returns failure message' do
