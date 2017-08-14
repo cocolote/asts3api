@@ -1,13 +1,12 @@
 class UserBucketsController < ApplicationController
-  before_action :set_user
   before_action :set_bucket, only: [:show, :update, :destroy]
 
   def index
-    json_response(@aws_profile.buckets)
+    json_response(@current_user.buckets)
   end
 
   def create
-    @bucket = @aws_profile.buckets.create!(bucket_params)
+    @bucket = @current_user.buckets.create!(bucket_params)
     json_response(@bucket, :created)
   end
 
@@ -27,12 +26,8 @@ class UserBucketsController < ApplicationController
 
   private
 
-  def set_aws_profile
-    @user = User.find(params[:user_id])
-  end
-
   def set_bucket
-    @bucket = @user.buckets.find_by!(id: params[:id]) if @user
+    @bucket = @current_user.buckets.find_by!(id: params[:id]) if @current_user
   end
 
   def bucket_params
