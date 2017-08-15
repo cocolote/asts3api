@@ -43,13 +43,24 @@ RSpec.describe 'Users API', type: :request do
     let(:admin) { create(:user) }
     # Create valid header with authorized user
     let(:headers) { valid_headers }
-    # Create a random user to delete
-    let(:user) { create(:user) }
 
-    before { delete "/user/#{user.id}", headers: headers }
+    context 'when the user exists' do
+      # Create a random user to delete
+      let(:user) { create(:user) }
 
-    it 'returns status code 204' do
-      expect(response).to have_http_status(204)
+      before { delete "/user/#{user.id}", headers: headers }
+
+      it 'returns status code 204' do
+        expect(response).to have_http_status(204)
+      end
+    end
+
+    context 'when the user doesn\'t exists' do
+      before { delete "/user/#{0}", headers: headers }
+
+      it 'returns status code 404' do
+        expect(response).to have_http_status(404)
+      end
     end
   end
 end
