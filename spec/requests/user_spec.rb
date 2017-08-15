@@ -38,9 +38,44 @@ RSpec.describe 'Users API', type: :request do
     end
   end
 
+  # Update user
+  describe 'PUT /user/:id' do
+    # Create admin user authorized to update an user
+    let(:admin) { create(:user, admin: true) }
+    # Create valid header with authorized user
+    let(:headers) { valid_headers }
+
+    context 'when user exists' do
+      # User to update
+      let(:user) { create(:user) }
+
+      before {
+        put "/user/#{user.id}",
+        params: { password: 'NewPassword' }.to_json,
+        headers: headers
+      }
+
+      it 'returns status code 204' do
+        expect(response).to have_http_status(204)
+      end
+    end
+
+    context 'when user does not exists' do
+      before {
+        put "/user/#{0}",
+        params: { password: 'NewPassword' }.to_json,
+        headers: headers
+      }
+
+      it 'returns status code 404' do
+        expect(response).to have_http_status(404)
+      end
+    end
+  end
+
   describe 'DELETE /user/:id' do
     # Create the user authorized to delete a user
-    let(:admin) { create(:user) }
+    let(:admin) { create(:user, admin: true) }
     # Create valid header with authorized user
     let(:headers) { valid_headers }
 

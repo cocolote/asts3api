@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     resources :buckets, controller: "aws_profile_buckets"
   end
 
-  resources :user, only: [:destroy] do
+  resources :user, only: [:update, :destroy] do
     resources :buckets, controller: "user_buckets"
   end
 end
