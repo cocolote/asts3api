@@ -19,9 +19,9 @@ RSpec.describe 'User Buckets API', type: :request do
   let(:id) { buckets.first.id }
   let(:headers) { valid_headers }
 
-  # Test suite for GET users/:user_id/buckets
-  describe 'GET users/:user_id/buckets' do
-    before { get "/users/#{user_id}/buckets", headers: headers }
+  # Test suite for GET user/:user_id/buckets
+  describe 'GET user/:user_id/buckets' do
+    before { get "/user/#{user_id}/buckets", headers: headers }
 
     context 'When user exists' do
       it 'returns all buckets' do
@@ -35,8 +35,8 @@ RSpec.describe 'User Buckets API', type: :request do
     end
   end
 
-  # Test suite for POST users/:user_id/buckets
-  describe 'POST users/:user_id/buckets' do
+  # Test suite for POST user/:user_id/buckets
+  describe 'POST user/:user_id/buckets' do
     let(:valid_attributes) {
       {
         aws_profile_id: aws_profile_id,
@@ -51,7 +51,7 @@ RSpec.describe 'User Buckets API', type: :request do
 
     context 'When request is valid' do
       before {
-        post "/users/#{user_id}/buckets",
+        post "/user/#{user_id}/buckets",
         params: valid_attributes,
         headers: headers
       }
@@ -67,7 +67,7 @@ RSpec.describe 'User Buckets API', type: :request do
 
     context 'When request is invalid' do
       before {
-        post "/users/#{user_id}/buckets",
+        post "/user/#{user_id}/buckets",
         params: {}.to_json,
         headers: headers
       }
@@ -82,9 +82,9 @@ RSpec.describe 'User Buckets API', type: :request do
     end
   end
 
-  # Test suite for GET users/:user_id/buckets/:id
-  describe 'GET users/:user_id/buckets/:id' do
-    before { get "/users/#{user_id}/buckets/#{id}", headers: headers }
+  # Test suite for GET user/:user_id/buckets/:id
+  describe 'GET user/:user_id/buckets/:id' do
+    before { get "/user/#{user_id}/buckets/#{id}", headers: headers }
 
     context 'When user bucket exists' do
       it 'returns status code 200' do
@@ -109,11 +109,11 @@ RSpec.describe 'User Buckets API', type: :request do
     end
   end
 
-  # Test suite for PUT users/:user_id/buckets/:id
-  describe 'PUT users/:user_id/buckets/:id' do
+  # Test suite for PUT user/:user_id/buckets/:id
+  describe 'PUT user/:user_id/buckets/:id' do
     let(:valid_attributes) { { bucket_name: 'ast_bucket' }.to_json }
     before {
-      put "/users/#{user_id}/buckets/#{id}",
+      put "/user/#{user_id}/buckets/#{id}",
       params: valid_attributes,
       headers: headers
     }
@@ -142,9 +142,9 @@ RSpec.describe 'User Buckets API', type: :request do
     end
   end
 
-  # Test suite for DELETE users/:user_id/buckets/:id
-  describe 'DELETE users/:user_id/buckets/:id' do
-    before { delete "/users/#{user_id}/buckets/#{id}", headers: headers }
+  # Test suite for DELETE user/:user_id/buckets/:id
+  describe 'DELETE user/:user_id/buckets/:id' do
+    before { delete "/user/#{user_id}/buckets/#{id}", headers: headers }
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)

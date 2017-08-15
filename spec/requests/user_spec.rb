@@ -37,4 +37,19 @@ RSpec.describe 'Users API', type: :request do
       end
     end
   end
+
+  describe 'DELETE /user/:id' do
+    # Create the user authorized to delete a user
+    let(:admin) { create(:user) }
+    # Create valid header with authorized user
+    let(:headers) { valid_headers }
+    # Create a random user to delete
+    let(:user) { create(:user) }
+
+    before { delete "/user/#{user.id}", headers: headers }
+
+    it 'returns status code 204' do
+      expect(response).to have_http_status(204)
+    end
+  end
 end
