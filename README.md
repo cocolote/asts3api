@@ -15,21 +15,21 @@ mysql
 
 * Configuration
 
-- clone repo down
-- modify database.yml with user and password to connect to db
-- create the db with rake db:create
-- create tables with rake db:migrate
-- run bundle install
-- rails s
+-clone repo down
+-run bundle install
+-modify database.yml with user and password to connect to db
+-create the db with rake db:create
+-create tables with rake db:migrate
+-rails s
 
 * Database creation
 
-- rake db:create
+-rake db:create
 
 * Database initialization
 
-- rake db:migrate
+-rake db:migrate
 
 * How to run the test suite
 
-- bundle exec rspec
+-bundle exec rspec
