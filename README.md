@@ -16,10 +16,15 @@ mysql
 * Configuration
 
 -clone repo down
+
 -run bundle install
+
 -modify database.yml with user and password to connect to db
+
 -create the db with rake db:create
+
 -create tables with rake db:migrate
+
 -rails s
 
 * Database creation
