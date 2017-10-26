@@ -21,3 +21,6 @@
 
 # Environmental variables and secrets
 .env
+
+# Vendor files (bundle install)
+vendor
